@@ -1,15 +1,16 @@
-const gulp = require('gulp');
-const del = require('del');
-const async = require('async');
-const sass = require('gulp-sass');
-const autoprefixer = require('gulp-autoprefixer');
-const cleanCSS = require('gulp-clean-css');
-const htmlmin = require('gulp-htmlmin');
-const imagemin = require('gulp-imagemin');
-const iconfont = require('gulp-iconfont');
-const consolidate = require('gulp-consolidate');
-const svgo = require('gulp-svgo');
-const runTimestamp = Math.round(Date.now() / 1000);
+const gulp = require('gulp'),
+    del = require('del'),
+    async = require('async'),
+    sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+    cleanCSS = require('gulp-clean-css'),
+    htmlmin = require('gulp-htmlmin'),
+    imagemin = require('gulp-imagemin'),
+    iconfont = require('gulp-iconfont'),
+    consolidate = require('gulp-consolidate'),
+    svgo = require('gulp-svgo'),
+    runTimestamp = Math.round(Date.now() / 1000),
+    browserSync = require('browser-sync').create();
 
 //Remove dist folder
 gulp.task('clean', done => {
@@ -22,11 +23,12 @@ gulp.task('styles:sass', () => {
     return gulp.src('./src/styles/index.scss')
         .pipe(sass.sync())
         .pipe(gulp.dest('./dist/styles'))
+        .pipe(browserSync.stream());
 })
 
 //Copy css files (libs, etc...)
 gulp.task('styles:copy', () => {
-    return gulp.src('./src/styles/*.css')
+    return gulp.src('./src/styles/vendor/*.css')
         .pipe(gulp.dest('./dist/styles'))
 })
 
@@ -132,3 +134,11 @@ gulp.task('build', gulp.series(
     'img:minify',
     'fonts'
 ))
+
+// Static Server + watching scss/html files
+gulp.task('serve', gulp.series('build', () => {
+    browserSync.init({ server: "./dist" });
+    gulp.watch("./src/styles/*.scss", gulp.series('styles:sass'));
+    gulp.watch("./src/img/*.*", gulp.series('img:minify'));
+    gulp.watch("./src/*.html", gulp.series('html:minify')).on('change', browserSync.reload);
+}));

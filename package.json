@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp iconfont && gulp build",
-    "fonts": "gulp iconfont"
+    "fonts": "gulp iconfont",
+    "dev": "gulp serve"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "async": "^2.6.2",
+    "browser-sync": "^2.26.3",
     "del": "^4.1.0",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.1.0",
