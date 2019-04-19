@@ -1,14 +1,14 @@
 ## Static site gulp boilerplate
 Boilerplate for development of static sites. 
 
-Based on Gulp toolkit.
+Based on Gulp.
 
 ## Features
 * SASS + Autoprefixer + minify css
-* Generate font from svg-icons
+* Generate iconfont from svg-icons
 * Minify images
 * Minify html
-* Live reload
+* Live reload for development
 
 ## Project structure
 ```fonts``` - fonts files
@@ -23,6 +23,5 @@ Based on Gulp toolkit.
 
 
 ## Available scripts
-
-* ```$ npm run dev``` for development
-* ```$ npm run build``` for build
+* ```$ npm run dev``` 
+* ```$ npm run build```
